@@ -1,0 +1,24 @@
+.top-header{
+    width: 100%;
+    background-color: #3b3b3b;
+    color: white;
+    text-align: left;
+    padding: 0 9px;
+}
+
+.top-header h1 {
+    margin: 0;
+    padding-top: 2px;
+    
+    
+    font-style: italic;
+}
+
+.square{
+    border: 1px solid white;
+    padding: 0 4px;
+    font-style: italic;
+    
+    
+    
+}
