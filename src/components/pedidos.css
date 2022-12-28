@@ -1,153 +1,31 @@
 .main-pedidos{
-    margin: 18px 0; 
+    margin: 4px 0; 
 }
 
-.list-title{
-    border: 1px solid black;
-    width: fit-content;
-    margin: 0 auto;
-    padding: 3px;
-}
-
-
-.clients-list-wrapper{
-    position: relative;
-}
-
-.clients-list{
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
-    width: 80%;
-    margin: 0 auto;
-    scroll-behavior: smooth;
-}
-
-.clients-list::-webkit-scrollbar{
-    background-color: transparent;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-}
-
-.clients-list::-webkit-scrollbar-thumb{
-    background-color: #bad200;
-    border-radius: 7px;
-    
-}
-
-
-
-.medias{
-    display: flex;
-    width: auto;
-    margin: 0 auto;
-    
-    justify-content: space-evenly;
-}
-
-.client-box{
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 8px rgb(97, 97, 97);
-    margin: 8px 8px;
-    background-color: rgb(240, 240, 240);
-    background-color: #b8b8b8;
-    min-width: 200px !important;
-    height: 25vh;
-    
-    
-}
-
-.carregando{
-    height: 25vh;
-    display: flex;
-    align-items: center;
+.main-pedidos .display-flex-row{
+    margin: 7px auto;
+    gap: 5px;
     justify-content: center;
 }
 
-.scroll-box{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: scroll !important;
+.main-pedidos .display-flex-row input{
+    width: 40px;
     
 }
 
-.client-box .pedido-details{
-    background-color: white;
-    border-radius: 7px;
-    padding: 2px;
-    margin: 3px;
-}
-
-.scroll-box::-webkit-scrollbar-thumb, .scroll-box::-webkit-scrollbar{
-    width: 0;
-}
-
-.client-box:hover{
-    cursor:default;
-}
-
-.client-cpf{
-    /*margin-bottom: 15px;*/
-    top: 0;
-    z-index: 1;
-    
-    background-color: #bad200;
-    width: 100%;
-    font-weight: 500;
-}
-
-.intervalo-medio{
-    color: #bad200
-}
-
-.dropdown-button{
-    transform: rotate(90deg);
-    margin-left: 6px;
-}
-
-.dropdown-button:hover{
+.recarregar-button:hover{
     cursor: pointer;
 }
 
-.pedidos-header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    margin: 0 auto;
+
+
+@keyframes slide-left {
+    0%{left: 50%;}
+    100%{left:0%;}
 }
 
-.view-options{
-    display: flex;
-    margin-left: 15px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px   
-}
-
-.nav-button{
-    position: absolute ;
-    z-index: 2;
-    color: white;
-    padding:  10px;
-    border-radius: 7px;
-    background-color: #bad200;
-}
-
-.nav-button:hover{
-    cursor: pointer;
-}
-
-.nav-button.prev{
-    left: 7%;
-    
-    top: 35%
-}
-
-.nav-button.next{
-    right: 7%;
-    top: 35%
+@keyframes slide-right {
+    0%{left: 0%;}
+    100%{left: 50%;}
 }
 

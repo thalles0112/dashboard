@@ -1,0 +1,94 @@
+@keyframes appear {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+}
+
+@keyframes rotating {
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+
+.busca-cpf-popup, .busca-intervalo-popup{
+    animation: appear 0.2s linear forwards;
+    
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    color: black;
+    width: 50vw;
+    height: 40vh;
+    /*box-shadow: 0 0 7px #000;*/
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+
+.busca-cpf-input, .busca-cpf-input:focus{
+    border: none;
+    outline: none;
+}
+
+.input-wrapper{
+    border: 1px solid black;
+    display: flex;
+    padding: 2px;
+}
+
+.input-wrapper.intervalo input{
+    width: 30px;
+}
+
+.input-wrapper img:hover{
+    cursor: pointer;
+}
+
+.close-popup-button:hover{
+    cursor: pointer;
+}
+
+.loading-circle{
+    
+    margin-top: 40%;
+    margin-left: 40%;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: rotating 4s linear infinite;
+    
+    
+    display: flex;
+    
+}
+
+.loading-dot{
+    
+    border-radius: 50%;
+    background-color: #bad200;
+    box-shadow: 0 0 10px #bad200, 
+                0 0 20px #bad200,
+                0 0 30px #bad200,
+                0 0 40px #bad200,
+                0 0 50px #bad200,
+                0 0 60px #bad200,
+                0 0 70px #bad200
+                ;
+    position: absolute;
+    width: 6px ;
+    height: 6px;
+    
+    
+}
+
+.centered-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: gray
+}
+
