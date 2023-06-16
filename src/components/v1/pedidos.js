@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import Recorrentes from "./recorrentes"
-import NaoRecorrente from "./naorecorrente"
-import RecorrenciaChart from "./chart"
-import './ui/busca-intervalo.css'
+import Recorrentes from "../recorrencia/recorrentes"
+import NaoRecorrente from "../recorrencia/naorecorrente"
+import RecorrenciaChart from "../chart"
+import './busca-intervalo.css'
 
 
 import './pedidos.css'
@@ -76,9 +76,9 @@ export default function Pedidos(){
                             :
                             
                             <div>
-                                <Recorrentes url={'/api/recorrente/'} clientes={[]}/>
+                                <Recorrentes url={'/api/recorrente/'} />
                             </div>}
-                    <RecorrenciaChart/>
+                   
                     </div>
                         
                        :

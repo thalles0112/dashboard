@@ -1,27 +1,30 @@
 import { useCallback, useEffect, useState } from "react"
-import url from "../backend"
-import arrow from './ui/img/right-arrow.png'
+import url from "../../backend"
+import {MdKeyboardArrowRight} from 'react-icons/md'
+import { getPedidosNaoRecorrentes } from "../services/requests"
+import { useSelector } from "react-redux"
 
 export default function NaoRecorrente(){
     const [clientes, setClientes] = useState([])
     const [loading, setLoading] = useState(null)
     const [pagina, setPagina] = useState(1)
+    const {token} = useSelector(state=>state.auth)
 
 
     useEffect(()=>{
-       async function getPedidos(){
-
-            await fetch(url+'/api/nao-recorrente/?page=1',{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then(resp=>resp.json().then(e=>setClientes(e)))
+        async function get(){
+            const resp = await getPedidosNaoRecorrentes(pagina, token)
+            setClientes(resp)
             setLoading(false)
         }
+       
+        
         setLoading(true)
-        getPedidos()
+        get()
+        
     },[])
+
+
 
     setTimeout(()=>{
         const productContainers = [...document.querySelectorAll('.clients-list')];
@@ -51,12 +54,7 @@ export default function NaoRecorrente(){
             let caralho_de_pagina = parseInt(pagina) +1
             setPagina(caralho_de_pagina)
             
-            await fetch(`${url}/api/nao-recorrente/?page=${caralho_de_pagina}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then(resp=>resp.json().then(e=>setClientes(e)))
+            await getPedidosNaoRecorrentes(caralho_de_pagina).then(resp=>setClientes(resp))
             setLoading(false)
         }
         setLoading(true)
@@ -73,12 +71,9 @@ export default function NaoRecorrente(){
             setPagina(caralho_de_pagina)
             
           
-            await fetch(`${url}/api/nao-recorrente/?page=${caralho_de_pagina}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then(resp=>resp.json().then(e=>setClientes(e)))
+            await getPedidosNaoRecorrentes(caralho_de_pagina).then(resp=>{
+                setClientes(resp)
+            })
             setLoading(false)
         }
         setLoading(true)
@@ -116,7 +111,7 @@ export default function NaoRecorrente(){
     
     )
 
-    if(loading){
+    if(loading && !clientes){
         return(
             <div>
               
@@ -148,21 +143,22 @@ export default function NaoRecorrente(){
         )
     }
     
-    let valor_medio = 0
-    let min_valor = 0
-    let max_valor = 0
-    let total_lenght = 0
-    try{
-        valor_medio = clientes[0].resumo.valor_medio
-        min_valor = clientes[0].resumo.valor_menor
-        max_valor = clientes[0].resumo.valor_maior
-        total_lenght = clientes[0].resumo.total_lenght
-    }
-    catch{
-
-    }
+   
     
-    if (!loading || loading == null){
+    else{
+        let valor_medio = 0
+        let min_valor = 0
+        let max_valor = 0
+        let total_lenght = 0
+        try{
+            valor_medio = clientes[0].resumo.valor_medio
+            min_valor = clientes[0].resumo.valor_menor
+            max_valor = clientes[0].resumo.valor_maior
+            total_lenght = clientes[0].resumo.total_lenght
+        }
+        catch{
+    
+        }
         return(
             <div className="main-pedidos">
                 
@@ -191,10 +187,10 @@ export default function NaoRecorrente(){
                     </div>
                 </div>
                 <div className="clients-list-wrapper">
-                <span className="prev nav-button"><img className="inverted" src={arrow}/></span>
-                <span className="next nav-button"><img src={arrow}/></span>
+                <span className="prev nav-button"><MdKeyboardArrowRight/></span>
+                <span className="next nav-button"><MdKeyboardArrowRight/></span>
                     <section className="clients-list">
-                        {clientes && clientes.slice(1,).map(cliente=>{
+                        {clientes.length > 0 && clientes.slice(1,).map(cliente=>{
                             
                             try{
                                 return(

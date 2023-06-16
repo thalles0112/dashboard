@@ -2,11 +2,11 @@ let url = ''
 const dev = false
 
 if(dev){
-    url = 'http://192.168.56.1:8000'
+    url = 'http://10.0.0.160:8001'
 }
 
 else{
-    url= 'https://hnb.pythonanywhere.com'
+    url= 'https://hnbdash.pythonanywhere.com'
 }
 
 export default url

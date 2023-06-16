@@ -1,41 +1,41 @@
 import {  useEffect, useState, useCallback } from "react"
-import url from '../backend'
-import arrow from './ui/img/right-arrow.png'
+import url from '../../backend'
+import {MdKeyboardArrowRight} from 'react-icons/md'
 import './recorrentes.css'
+import { getPedidosNaoRecorrentes, getPedidosRecorrentes } from "../services/requests"
+import { useSelector } from "react-redux"
 
 export default function Recorrentes(props){
     
-    const [clientes, setClientes] = useState(props.clientes)
+    const [clientes, setClientes] = useState([])
     const [loading, setLoading] = useState(null)
     const [pagina, setPagina] = useState(1)
-    const [minInterval, setMinInterval] = useState('')
-    const [maxInterval, setMaxInterval] = useState('')
- 
+    const [minInterval, setMinInterval] = useState(1)
+    const [maxInterval, setMaxInterval] = useState(1)
+    const {token} = useSelector(state=>state.auth)
+    
+
+
     useEffect(()=>{
-        async function getPedidos(){
-             await fetch(`${url}${props.url}?page=${pagina}&min-interval=${props.minInterval}&max-interval=${props.maxInterval}`,{
-                 method:'GET',
-                 headers:{
-                     'Content-Type':'application/json'
-                 }
-             }).then(resp=>resp.json().then(e=>setClientes(e)))
- 
-             setLoading(false)
-         }
+        async function get(){
+            const resp = await getPedidosRecorrentes(pagina, minInterval, maxInterval,token)
+            setClientes(resp)
+            setLoading(false)
+            
+        }
+
          setLoading(true)
-         getPedidos()
+         get()
+         
      },[])
      
      const recarregar=useCallback(()=>{
   
-        async function getPedidos(){
+        async function getPedidos() {
             
-            await fetch(`${url}${props.url}?page=${pagina}&min-interval=${props.minInterval}&max-interval=${props.maxInterval}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then(resp=>resp.json().then(e=>setClientes(e)))
+            await getPedidosRecorrentes(pagina, minInterval,maxInterval,token).then(resp=>{
+                setClientes(resp)
+            })
             
             setLoading(false)
         }
@@ -45,19 +45,14 @@ export default function Recorrentes(props){
         
 
        
-    },[props.minInterval, props.maxInterval, props.url])
+    },[props.minInterval,props.maxInterval])
      
      const nextPagina =useCallback(()=>{
         async function getPedidos(){
             let caralho_de_pagina = parseInt(pagina) +1
             setPagina(caralho_de_pagina)
             
-            await fetch(`${url}${props.url}?page=${caralho_de_pagina}&min-interval=${props.minInterval}&max-interval=${props.maxInterval}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then(resp=>resp.json().then(e=>setClientes(e)))
+           await getPedidosNaoRecorrentes(caralho_de_pagina).then(e=>setClientes(e))
             setLoading(false)
         }
         setLoading(true)
@@ -145,7 +140,7 @@ export default function Recorrentes(props){
    
     
     
-    if(loading){
+    if(loading && !clientes){
         return(
             <div className="main-pedidos">
                 
@@ -197,32 +192,35 @@ export default function Recorrentes(props){
             </div>
         )
     }
-    let intervalo = 0
-    let min_intervalo = 0
-    let max_intervalo = 0
 
-    let valor_medio = 0
-    let min_valor =0
-    let max_valor =0
-    let total_lenght = 0
+
+
+
+    else{
+   
+        let intervalo = 0
+        let min_intervalo = 0
+        let max_intervalo = 0
     
-    try{
-        intervalo = clientes[0].resumo.intervalo_medio
-        min_intervalo = clientes[0].resumo.intervalo_menor
-        max_intervalo = clientes[0].resumo.intervalo_maior
-        total_lenght = clientes[0].resumo.total_lenght
-
-        valor_medio = clientes[0].resumo.valor_medio
-        max_valor = clientes[0].resumo.valor_maior
-        min_valor = clientes[0].resumo.valor_menor
-    }
-    catch{
-
-    }
-    let i = 1
-
+        let valor_medio = 0
+        let min_valor =0
+        let max_valor =0
+        let total_lenght = 0
+        
+        try{
+            intervalo = clientes[0].resumo.intervalo_medio
+            min_intervalo = clientes[0].resumo.intervalo_menor
+            max_intervalo = clientes[0].resumo.intervalo_maior
+            total_lenght = clientes[0].resumo.total_lenght
     
-    if (!loading || loading == null){
+            valor_medio = clientes[0].resumo.valor_medio
+            max_valor = clientes[0].resumo.valor_maior
+            min_valor = clientes[0].resumo.valor_menor
+        }
+        catch{
+    
+        }
+        let i = 1
         return(
             <div className="main-pedidos">
 
@@ -273,27 +271,27 @@ export default function Recorrentes(props){
                
                 
                 <div className="clients-list-wrapper">
-                <span className="prev nav-button"><img className="inverted" src={arrow}/></span>
-                <span className="next nav-button"><img src={arrow}/></span>
+                <span className="prev nav-button"><MdKeyboardArrowRight/></span>
+                <span className="next nav-button"><MdKeyboardArrowRight/></span>
                 
                 <section className="clients-list">
                     
 
-                    {clientes.slice(1,).map(cliente=>{
+                    {clientes && clientes.slice(1,).map(cliente=>{
                         if (cliente){
 
                         
                         return(
                         <div key={cliente.cliente} className="client-box" >
                             <div className="client-cpf">Cliente: {cliente.cliente}</div>
-                            <div className="client-cpf">Intervalo: {String(cliente.intervalo).slice(0,4)} Dias</div>
+                            <div className="client-cpf">Intervalo: {cliente.intervalo.toFixed(0)} Dias</div>
                             <div className="client-cpf">T. Médio: R$ {cliente.ticket_medio.toFixed(2)}</div>
                                 <div className="scroll-box">
                                     {cliente.pedidos.map(p=>
                                         <div className="pedido-details" key={String(cliente.cliente)+String(p.data)+String(p.valor)+String(Math.random())}>
                                             <div>
                                                 <div className="order-date">{p.data.split('-')[2]}/{p.data.split('-')[1]}/{p.data.split('-')[0]}</div>
-                                                <div className="order-date">R$ {p.valor}</div>
+                                                <div className="order-date">R$ {p.valor.toFixed(2)}</div>
                                             </div>
                                             <div className="order-date pedido">Pedido Nº <span className="n_pedido">{p.n_pedido}</span></div>
                                     

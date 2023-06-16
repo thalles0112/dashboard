@@ -1,0 +1,38 @@
+#login-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    height: 100vh;
+    width: 100vw;
+}
+
+.login-form{
+    width: 400px;
+    display: flex;
+    border-radius: 6px;
+    box-shadow: 0 0 5px #3b3b3b;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+    background-color: #3b3b3b;
+    padding: 50px;
+   
+}
+
+
+
+@media only screen and (min-width:714px){
+    .login-form{
+        width: 400px;
+    }
+}
+
+.login-form label{
+    color: #fff;
+}
+
+
+.login-form button{
+    color: #fff;
+}

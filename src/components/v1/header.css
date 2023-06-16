@@ -3,10 +3,15 @@
     background-color: #3b3b3b;
     color: white;
     text-align: left;
-    padding: 0 9px;
+    padding: 0 29px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 90px;
+}
+
+.top-header h3 a{
+    color: white
 }
 
 .search-image{
