@@ -30,13 +30,7 @@ export function getPedidosRecorrentes(pagina, minInterval, maxInterval, token){
 
 
 
-
-
-
-
-
-
-
+// Aqui são pegos os dados para preencher aquelas caixas cinzas
 export function getPedidos(token){
     return axios.get(`${url}/apiv2/pedidos`, {
         method: 'GET',
@@ -46,6 +40,33 @@ export function getPedidos(token){
         }
     })
 }
+
+
+export function getRecorrentPerPeriod(data_inicial, data_final, token){
+    return axios.get(`${url}/apiv2/filtrar-recorrentes-por-periodo/?data_inicial=${data_inicial}&data_final=${data_final}`, {
+        method: 'GET',
+        headers:{
+            'Content-Type':'Application/json',
+            'Authorization': `token ${token}`
+        }
+    })
+}
+
+export function getNovosPerPeriod(data_inicial, data_final, token){
+    return axios.get(`${url}/apiv2/filtrar-novos-por-periodo/?data_inicial=${data_inicial}&data_final=${data_final}`, {
+        method: 'GET',
+        headers:{
+            'Content-Type':'Application/json',
+            'Authorization': `token ${token}`
+        }
+    })
+}
+
+
+
+
+
+
 
 export function getPedidosFiltrados(maxInterval, minInterval, token){
     return axios.get(`${url}/apiv2/filtro-intervalo?max-interval=${maxInterval}&min-interval=${minInterval}`,{
@@ -99,6 +120,8 @@ export function auth(credentials){
         body: JSON.stringify(credentials)
     }).then(status).catch(() => {})
 }
+
+
 
 
 

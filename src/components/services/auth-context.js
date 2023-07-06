@@ -15,7 +15,7 @@ function loadCookies(){
 }
 
 const cookies = loadCookies()
-console.log(cookies)
+
 export const userAuthSlice = createSlice({
     name: 'auth',
     value: false,

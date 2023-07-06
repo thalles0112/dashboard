@@ -4,13 +4,14 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { useState } from 'react'
 import logo from '../img/honeybe.svg'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../services/auth-context'
 import { deleteAllCookies } from '../services/utils'
 
 export default function HeaderV2(){
     const [CPFvisible, CPFsetVisible] = useState(false)
     const dispatch = useDispatch()
+    const {username} = useSelector(state=>state.auth)
     
     const CPFvisibleSetter =()=>{
         if(CPFvisible){
@@ -46,7 +47,7 @@ export default function HeaderV2(){
                 
             </div>
             <div className='display-flex-row'>
-              
+              <span>Olá, {username}</span>
             </div>
             <button id='logout-button' onClick={logout}>Logout</button>
         </div>

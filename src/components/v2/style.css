@@ -38,7 +38,8 @@
 #v2home {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    padding-top: 30px;
+    align-items: flex-start;
     width: 100%;
     height: calc(100vh - 80px);
     overflow-y: scroll;
@@ -61,6 +62,7 @@
     justify-content: flex-start;
     color: white;
     z-index: 3;
+    display: none;
 }
 
 #rotate90{
@@ -207,7 +209,7 @@
 }
 
 #last-order-date{
-    position: absolute;
+    
     right: 20px;
     top: 90px;
     color: gray;
@@ -241,5 +243,23 @@ td{
     border-radius: 6px;
 }
 
+.period-selector{
+    display: flex;
+    width: 100%;
+    gap: 14px;
+    color: #fff
+}
 
+.period-selector button{
+    color: #fff
+}
 
+.period-selector input {
+    outline: 0 !important;
+    border: 0;
+    border-bottom: 1px solid #6b6b6b;
+    background-color: transparent;
+    color: #fff;
+    width: 150px;
+    
+}
