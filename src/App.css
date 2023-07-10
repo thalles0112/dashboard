@@ -1,9 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --main-box-bg: #212025;
+  --small-box-bg: #383844;
+  --body-bg: #30343b;
+  --body-fg: #fff;
+}
+
+
 *{
   box-sizing: border-box;
 }
 
 .App {
   text-align: center;
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--body-fg)
 }
 
 :root {
@@ -17,4 +34,14 @@
 .display-flex-row{
   display: flex;
   align-items: center;
+}
+
+::-webkit-scrollbar{
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #21202588;
+  border-radius: 4px;
+  width: 5px;
 }

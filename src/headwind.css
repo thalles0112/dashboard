@@ -1,0 +1,57 @@
+.border{
+  border: 1px solid white
+}
+
+.flex{
+  display: flex;
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.flex-row{
+  flex-direction: row;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.gx-10{
+  gap: 10px
+}
+
+.w-full{
+  width: 100%;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.justify-around{
+  justify-content: space-around;
+}
+
+.font-medium{
+  font-size: 1.3em;
+}
+
+.font-big{
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.beautiful-border{
+  box-shadow: 0 0 6px rgb(31, 31, 31);
+  padding: 6px;
+}
+
+.h-fit{
+  height: fit-content;
+}

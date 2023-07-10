@@ -72,7 +72,7 @@
 
 
 .black-box{
-    background-color: #3b3b3b;
+    background-color: var(--main-box-bg);
     color: white;
     width: 100%;
     margin: 15px 0;
@@ -85,7 +85,7 @@
 }
 
 .black-box h2{
-    border-bottom: 1px solid #4b4b4b;
+    border-bottom: 1px solid var(--small-box-bg);
     margin-bottom: 14px;
     font-size: 1.4em;
 }
@@ -109,8 +109,8 @@
 }
 
 .black-box .sub-box-row div{
-    background-color: #4b4b4b;
-    padding: 15px;
+    background-color: #383844;
+    padding: 7px;
     margin: 3px 3px;
     border-radius: 7px;
     cursor: default;

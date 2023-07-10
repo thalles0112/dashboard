@@ -1,4 +1,5 @@
 import './App.css';
+import './headwind.css'
 import { RouterProvider } from 'react-router';
 import { authrouter, noauthrouter } from './components/routes';
 import { useSelector } from 'react-redux';

@@ -1,6 +1,6 @@
 .top-header{
     width: 100%;
-    background-color: #3b3b3b;
+    background-color: var(--main-box-bg);
     color: white;
     text-align: left;
     padding: 0 29px;

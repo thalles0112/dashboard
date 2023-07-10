@@ -38,18 +38,17 @@ export default function HeaderV2(){
     }
 
     return(
-        <div className='top-header'>
-           
-          
-            <div>
-                <img src={logo} style={{filter: 'invert(1)', width:'150px'}}/>
-                <h3><Link to={'/v1'}>LTV - v1</Link> | LTV - v2</h3>
+        <header className='top-header'>
+            <div className='flex flex align-center gx-10'>
+                <img src={logo} style={{filter: 'invert(1)', width:'150px'}}/> 
+                <Link to={'/'} >Início</Link>
+                <Link to={'/produtos'} >Produtos</Link>
                 
             </div>
             <div className='display-flex-row'>
               <span>Olá, {username}</span>
             </div>
             <button id='logout-button' onClick={logout}>Logout</button>
-        </div>
+        </header>
     )
 }
