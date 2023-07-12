@@ -41,7 +41,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb{
-  background-color: #21202588;
+  background-color: #6d6d6ddc;
   border-radius: 4px;
   width: 5px;
 }

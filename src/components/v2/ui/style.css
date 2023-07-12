@@ -91,3 +91,6 @@
     
 }
 
+.side-bar select, option, .side-bar input {
+    color: black;
+}
