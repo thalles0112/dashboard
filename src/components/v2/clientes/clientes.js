@@ -105,7 +105,7 @@ export default function Clientes(){
 
  
     return(
-        <section>
+        <section className="clientes-page">
            
             <div className="flex  flex-col align-center beautiful-border">
                 <h1 className="font-big">Clientes</h1>

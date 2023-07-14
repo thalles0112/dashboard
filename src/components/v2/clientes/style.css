@@ -1,4 +1,4 @@
-.vertical-scroll{
+.clientes-page .vertical-scroll{
     max-height: calc(100vh - 280px);
     overflow-y: scroll;
     display: flex;
