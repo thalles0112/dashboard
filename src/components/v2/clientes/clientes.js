@@ -16,7 +16,7 @@ const clientes = {
     },
     clientes:[
         {
-            nome: 'Thalles Oliveira',
+            nome: '',
             cpf: 11111111111,
             pedidos: 0,
             valor_total: 40,
@@ -74,8 +74,8 @@ return(
 
 export default function Clientes(){
     const [res,setRes] = useState(clientes)
-    const [initialData, setInitialData] = useState('2022-01-01')
-    const [finalData, setFinalData] = useState('2022-01-10')
+    const [initialData, setInitialData] = useState(new Date().toISOString().split('T')[0])
+    const [finalData, setFinalData] = useState(new Date().toISOString().split('T')[0])
     const [page, setPage] = useState(1)
     const [tipo, setTipo] = useState('recorrentes')
     const [orderBy, setOrderBy]  = useState('valor')
