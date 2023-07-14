@@ -51,7 +51,7 @@ export default function ClientCard({cliente, faturamento_total}){
                     {produtosShown && cliente.produtos.sort((a,b)=>new Date(a.data) - new Date(b.data)).map(pedidos=>{
                        return(
                         <div key={pedidos.sku_ref} className="products pedido">
-                            <div>{new Date(pedidos.data).toLocaleDateString()} - {pedidos.valor}</div>
+                            <div>{new Date(pedidos.data).toLocaleDateString()} - R$ {pedidos.valor.toFixed(2)}</div>
                             <div className="flex flex-col">
                                 {pedidos.lista_produtos.map(produto=>{
                                     return(
