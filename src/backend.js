@@ -1,5 +1,5 @@
 let url = ''
-const dev = true
+const dev = !true
 
 if(dev){
     url = 'http://10.0.0.160:8000'
