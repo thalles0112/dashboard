@@ -26,11 +26,11 @@ export default function Login(){
 
     return(
         <section id="login-page">
-            <div className="login-form">
+            <div className="login-form beautiful-border">
                 <label>Honey Usuário</label>
-                <input defaultValue={username} type="text" onChange={(e)=>{setUsername(e.target.value)}}/>
+                <input onKeyDown={(e)=>{if(e.key=='Enter'){loginHandler()}}} defaultValue={username} type="text" onChange={(e)=>{setUsername(e.target.value)}}/>
                 <label>Senha</label>
-                <input defaultValue={password} type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
+                <input onKeyDown={(e)=>{if(e.key=='Enter'){loginHandler()}}} defaultValue={password} type="password" onChange={(e)=>{setPassword(e.target.value)}}/> 
                 <button onClick={loginHandler}>Entrar</button>
             </div>
         </section>

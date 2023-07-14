@@ -1,0 +1,47 @@
+.vertical-scroll{
+    max-height: calc(100vh - 280px);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 800px;
+    scroll-behavior: smooth;
+}
+
+@keyframes products-open {
+    0%{height: 0%;}
+    100%{height: 100%;}
+}
+
+@keyframes products-close {
+    0%{height: 100%;}
+    100%{height: 0%;}
+}
+
+
+
+.products {
+    overflow: hidden;
+    text-align: left;
+    background-color: var(--small-box-bg);
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.pedido{
+    margin: 15px 0;
+}
+
+.client-card{
+    background-color: var(--main-box-bg)
+}
+
+
+
+.product{
+    box-shadow: 0 0 7px black;
+    padding: 5px;
+    border-radius: 5px;
+}
+

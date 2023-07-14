@@ -1,5 +1,9 @@
 .border{
-  border: 1px solid white
+  border: 1px solid white;
+}
+
+.br-5{
+  border-radius: 5px;
 }
 
 .flex{
@@ -34,8 +38,17 @@
   justify-content: space-around;
 }
 
+.justify-between{
+  justify-content: space-between;
+}
+
 .font-medium{
   font-size: 1.3em;
+}
+
+.font-m-big{
+  font-size: 1.4em;
+  font-weight: bold;
 }
 
 .font-big{
@@ -54,4 +67,46 @@
 
 .h-fit{
   height: fit-content;
+}
+
+.gx-5{
+  gap: 5%
+}
+
+.w-500{
+  width: 500px;
+}
+
+.h-auto{
+  height: auto;
+}
+
+.w-auto{
+  width: 550px;
+}
+
+.h-40{
+  height: 52px;
+}
+
+.px-5{
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+}
+
+.py-5{
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
+}
+
+.my-5{
+  margin: 5px 0;
+}
+
+.font-black{
+  color: #000;
+}
+
+.text-center{
+  text-align: center;
 }

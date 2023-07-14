@@ -43,6 +43,7 @@ export default function HeaderV2(){
                 <img src={logo} style={{filter: 'invert(1)', width:'150px'}}/> 
                 <Link to={'/'} >Início</Link>
                 <Link to={'/produtos'} >Produtos</Link>
+                <Link to={'/clientes'} >Clientes</Link>
                 
             </div>
             <div className='display-flex-row'>

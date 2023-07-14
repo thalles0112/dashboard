@@ -53,11 +53,11 @@
     border-radius: 4px;
 }
 
-.animated-bg.recorrentes{
+.animated-bg.recorrentes, .animated-bg.valor{
     animation: slidebutton-recorrentes 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }
 
-.animated-bg.novos{
+.animated-bg.novos, .animated-bg.cliente{
     animation: slidebutton-novos 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }
 
