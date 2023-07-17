@@ -1,0 +1,31 @@
+.box {
+    position: relative;
+    height: 200px;
+    width: 200px;
+  
+    z-index: 1;
+
+    top: 0;
+    left: 0
+
+}
+
+
+.box::after{
+    position: absolute;
+    left: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: inherit;
+    border-radius: inherit;
+    top: 5px;
+    filter: blur(0.4rem);
+    z-index: -1;
+    
+}
+
+video{
+    box-shadow: 0 0 40px 0 #3a476b;
+    width: 400px;
+}

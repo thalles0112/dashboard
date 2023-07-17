@@ -42,3 +42,42 @@
 #logout-button{
     color: #f00;
 }
+
+@keyframes popup-appear {
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@keyframes popup-disappear {
+    0%{opacity: 1;}
+    100%{opacity: 0; display: none;}
+}
+
+.header-options{
+    background-color: #f1f1f1;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    display: none;
+}
+
+.header-options.active{
+    display: block;
+    animation: popup-appear 0.5s linear forwards;
+}
+
+.header-options.innactive{
+    animation: popup-disappear 0.5s linear forwards;
+}
+
+.header-options ul li {
+    cursor: pointer;
+}
+
+.header-options ul li:hover{
+    color: #bad200;
+    transition: 0.2s;
+}

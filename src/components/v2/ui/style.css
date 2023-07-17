@@ -1,11 +1,11 @@
 @keyframes slide{
-    0%{transform: translateX(0vw);}   
-    100%{transform: translateX(-30vw);}   
+    0%{transform: translateX(0px);}   
+    100%{transform: translateX(-400px);}   
 }
 
 @keyframes slide-back {
-    0%{transform: translateX(-30vw);}   
-    100%{transform: translateX(0vw);}   
+    0%{transform: translateX(-400px);}   
+    100%{transform: translateX(0px);}   
 }
 
 @keyframes rotate180 {
@@ -17,10 +17,10 @@
 .side-bar{
     
     background-color: var(--main-box-bg);
-    width: 30vw;
+    width: 400px;
     height: 100%;
     position: absolute;
-    right: -30vw;
+    right: -400px;
     top: 0;
     z-index: 3;
     color: white !important;

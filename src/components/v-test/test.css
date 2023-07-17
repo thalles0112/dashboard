@@ -1,16 +1,121 @@
-
-
-.wrapper{
-    box-shadow: 0 0 4px rgb(22, 226, 4);
-    padding: 2px;
-    width: 40%;
-    margin: 6px auto;
-    background-color: black;
-    color: rgb(22, 226, 4);
+.navigation{
+    position: relative;
+    width: 400px;
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:  10px;
 }
 
-.vertical-scroll{
-    overflow-y: scroll;
-    height: 80vh;
+.navigation ul {
+    display: flex;
+    width: 350px;
+}
 
+.navigation ul li {
+     position: relative;
+     list-style-type: none;
+     width: 70px;
+     height: 70px;
+     z-index: 1;
+}
+
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+
+.list.active .icon{
+    transition: 0.5s;
+    transform: translateY(-10px);
+}
+
+.list .text{
+    margin-top: 5px
+}
+
+.list{
+    color: #000
+}
+
+.list.active{
+    color: red;
+}
+
+@keyframes change-color {
+    0%{background-color: #4dd5da;}
+    50% {background-color: #e45d45;}
+    100%{background-color: #4dd5da;}
+}
+
+.selector{
+    width: 70px;
+    height: 70px;
+    background-color: #4dd5da;
+
+    position: absolute;
+    top: -50%;
+    border-radius: 50%;
+    border: 3px solid var(--body-bg);
+    
+}
+
+.selector::before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    z-index: 2;
+    position: absolute;
+    left: -19px;
+    top: 50%;
+    border-top-right-radius: 20px;
+    box-shadow: 0px -10px 0 0 var(--body-bg);
+    
+}
+
+.selector::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    z-index: 2;
+    position: absolute;
+    right: -19px;
+    top: 50%;
+    border-top-left-radius: 20px;
+    box-shadow: 0px -10px 0 0 var(--body-bg);
+    
+}
+
+.navigation ul li:nth-child(1).active ~ .selector{
+    transition: 0.5s;
+    transform: translateX(calc(70px * 0));
+}
+
+.navigation ul li:nth-child(2).active ~ .selector{
+    transition: 0.5s;
+    transform: translateX(calc(70px * 1));
+}
+
+.navigation ul li:nth-child(3).active ~ .selector{
+    transition: 0.5s;
+    transform: translateX(calc(70px * 2));
+}
+
+.navigation ul li:nth-child(4).active ~ .selector{
+    transition: 0.5s;
+    transform: translateX(calc(70px * 3));
+}
+
+.navigation ul li:nth-child(5).active ~ .selector{
+    transition: 0.5s;
+    transform: translateX(calc(70px * 4));
 }

@@ -11,7 +11,7 @@ export const authrouter = createBrowserRouter(
         <Route path="/" element={[<HeaderV2 key={1}/>, <V2Home key={2}/>]}/>,
         <Route path="/test" element={[<HeaderV2 key={1}/>, <Test key={2}/>]}/>,
         <Route path="/produtos" element={[<HeaderV2 key={1}/>, <Produtos key={2}/>]}/>,
-        <Route path="/clientes" element={[<HeaderV2 key={1}/>, <Clientes key={2}/>]}/>
+        <Route path="/clientes" element={[<HeaderV2 key={1}/>, <Clientes key={2}/>]}/>,
     ])
 )
 

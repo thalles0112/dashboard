@@ -8,10 +8,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../services/auth-context'
 import { deleteAllCookies } from '../services/utils'
 
+function HeaderOptions({active, logoutHandler}){
+    
+
+    return(
+        <div className={`header-options ${active}`}>
+            <ul>
+                <li onClick={logoutHandler}>Logout</li>
+                <li><a href='https://incandescent-profiterole-73ff15.netlify.app/' target='blank'>Upload Planilha</a></li>
+            </ul>
+            
+        </div>
+    )
+}
+
 export default function HeaderV2(){
     const [CPFvisible, CPFsetVisible] = useState(false)
     const dispatch = useDispatch()
     const {username} = useSelector(state=>state.auth)
+    const [headerOptionsActive, setHeaderOptionsActive] = useState('null')
     
     const CPFvisibleSetter =()=>{
         if(CPFvisible){
@@ -46,10 +61,11 @@ export default function HeaderV2(){
                 <Link to={'/clientes'} >Clientes</Link>
                 
             </div>
-            <div className='display-flex-row'>
-              <span>Olá, {username}</span>
+            <div className='display-flex-row cursor-pointer'>
+              <span onClick={()=>{headerOptionsActive=='active'?setHeaderOptionsActive('innactive'):setHeaderOptionsActive('active')}}>Olá, {username} </span>
+              <HeaderOptions logoutHandler={logout} active={headerOptionsActive}/>
             </div>
-            <button id='logout-button' onClick={logout}>Logout</button>
+           
         </header>
     )
 }
