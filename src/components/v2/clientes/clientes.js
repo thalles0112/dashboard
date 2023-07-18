@@ -110,18 +110,18 @@ export default function Clientes(){
             <div className="flex  flex-col align-center beautiful-border">
                 <h1 className="font-big">Clientes</h1>
                 
-                <div className="flex space-around gx-5 align-center">
-                <div className="beautiful-border flex flex-col h-fit">
-                    <span>Ordenar por</span>
+                <div className="flex gx-20 align-center justify-around">
+                    <div className="beautiful-border flex flex-col h-fit">
+                        <span>Ordenar por</span>
                         <div className="tipo-button--wrapper flex">
                             <button className={`tipo-button ${orderBy=='valor'?'active':'innactive'}`} onClick={()=>{setOrderBy('valor')}}><span className="button-text">Valor</span> <div className={`animated-bg ${orderBy}`}></div></button>
-                            <button className={`tipo-button ${orderBy=='cliente'?'active':'innactive'}`} onClick={()=>{setOrderBy('cliente')}}><span className="button-text">Nome cliente</span></button>
+                            <button className={`tipo-button ${orderBy=='pedidos'?'active':'innactive'}`} onClick={()=>{setOrderBy('pedidos')}}><span className="button-text">Pedidos</span></button>
                         </div>
                     </div> 
                 
                     
                     <div className="beautiful-border flex flex-col h-fit">
-                    <span>Tipo de cliente</span>
+                        <span>Tipo de cliente</span>
                         <div className="tipo-button--wrapper flex">
                             <button className={`tipo-button ${tipo=='recorrentes'?'active':'innactive'}`} onClick={()=>{setTipo('recorrentes')}}><span className="button-text">Recorrentes</span> <div className={`animated-bg ${tipo}`}></div></button>
                             <button className={`tipo-button ${tipo=='novos'?'active':'innactive'}`} onClick={()=>{setTipo('novos')}}><span className="button-text">Novos</span></button>
@@ -129,7 +129,7 @@ export default function Clientes(){
                     </div> 
                     <div className="beautiful-border h-40 flex align-center">
                         <PeriodSelector bucetador={dataSetter}/>   
-                        {loading?<ReactLoading height={30} width={30} type="bars"/>:<></>}
+                        {loading?<ReactLoading height={30} width={30} type="bars"/>:<div className="loading-placeholder"></div>}
                     </div>
                     
                 </div>
@@ -149,9 +149,9 @@ export default function Clientes(){
                     <div className="flex flex-col justify-center align-center">
                         <span>Página</span>
                         <div className="flex">
-                            <button onClick={page >=2 && !loading?()=>{setPage(page-1); scrollRef.current.scrollTop=0}:()=>{}}>{'<'}</button>
+                            <button className={`page-button ${loading?'loading':''}`} onClick={page >=2 && !loading?()=>{setPage(page-1); scrollRef.current.scrollTop=0}:()=>{}}>{'<'}</button>
                             <input value={page} onChange={(e)=>{setPage(parseInt(e.target.value))}} className="font-black text-center" type="text"/>
-                            <button onClick={!loading?()=>{setPage(page+1); scrollRef.current.scrollTop=0}:()=>{}}>{'>'}</button>
+                            <button className={`page-button ${loading?'loading':''}`} onClick={!loading?()=>{setPage(page+1); scrollRef.current.scrollTop=0}:()=>{}}>{'>'}</button>
                         </div>
                     </div>
                 </div>
@@ -159,16 +159,10 @@ export default function Clientes(){
                 
                 <div>
                     
-                    <div>
-                    <h1 className="font-big text-left">Resumo</h1>
-                        <h2 className="font-m-big">Faturamento Total: </h2>
-                        <div className="text-left font-medium w-full">
-                            R$ {res.generic.faturamento_total.toLocaleString('pt-BR', opcoes)}
-                        </div>
-                        <h2 className="font-m-big text-left">Clientes </h2>
-                        <div className="text-left font-medium w-full">
-                            {res.generic.quantidade}
-                        </div>
+                    <div className="text-left">
+                        <h1 className="font-big text-left">Resumo</h1>
+                        <h2 className="font-m-big">Faturamento Total: R$ {res.generic.faturamento_total.toLocaleString('pt-BR', opcoes)} </h2>
+                        <h2 className="font-m-big text-left">Total de clientes no período {res.generic.quantidade}</h2>
                     </div>    
                     
                 </div>

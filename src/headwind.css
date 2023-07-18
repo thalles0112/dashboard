@@ -61,7 +61,7 @@
 }
 
 .beautiful-border{
-  box-shadow: 0 0 6px rgb(31, 31, 31);
+  box-shadow: 0 0 6px rgb(15, 15, 15);
   padding: 6px;
 }
 
@@ -71,6 +71,10 @@
 
 .gx-5{
   gap: 5%
+}
+
+.gx-20{
+  gap: 20%
 }
 
 .w-500{

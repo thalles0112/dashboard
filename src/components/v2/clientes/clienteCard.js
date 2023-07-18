@@ -24,7 +24,7 @@ export default function ClientCard({cliente, faturamento_total}){
                 <div className="flex flex-col text-left">
                     <span>Pedidos: {cliente.pedidos}</span>
                     <span>Ticket Médio: R$ {(cliente.valor_total/cliente.pedidos).toFixed(2)}</span>
-                    <span>Faturamento Total: {cliente.valor_total.toFixed(2)}</span>
+                    <span>Total: {cliente.valor_total.toFixed(2)}</span>
                     <span>{(cliente.valor_total*100 / faturamento_total).toFixed(2)}% do faturamento</span>
                     
                 </div>
