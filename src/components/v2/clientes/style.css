@@ -48,6 +48,7 @@
 .page-button.loading{
     color: gray;
     border: gray;
+    cursor: default;
 }
 
 .loading-placeholder{
