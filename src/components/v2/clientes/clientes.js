@@ -106,7 +106,7 @@ export default function Clientes(){
  
     return(
         <section className="clientes-page">
-           
+           <div className={`loading-screen ${loading?'loading':''}`}> {loading?<ReactLoading height={30} width={60} type="bars"/> :<></>}Carregando...</div>
             <div className="flex  flex-col align-center beautiful-border">
                 <h1 className="font-big">Clientes</h1>
                 
@@ -127,9 +127,13 @@ export default function Clientes(){
                             <button className={`tipo-button ${tipo=='novos'?'active':'innactive'}`} onClick={()=>{setTipo('novos')}}><span className="button-text">Novos</span></button>
                         </div>
                     </div> 
-                    <div className="beautiful-border h-40 flex align-center">
-                        <PeriodSelector bucetador={dataSetter}/>   
-                        {loading?<ReactLoading height={30} width={30} type="bars"/>:<div className="loading-placeholder"></div>}
+                    <div className="beautiful-border h-76 flex align-center">
+                        <div className="flex flex-col align-center">
+                            <span>Ordenar por</span>
+                            <PeriodSelector bucetador={dataSetter}/>   
+                        </div>
+                        
+                       
                     </div>
                     
                 </div>
@@ -161,8 +165,8 @@ export default function Clientes(){
                     
                     <div className="text-left">
                         <h1 className="font-big text-left">Resumo</h1>
-                        <h2 className="font-m-big">Faturamento Total: R$ {res.generic.faturamento_total.toLocaleString('pt-BR', opcoes)} </h2>
-                        <h2 className="font-m-big text-left">Total de clientes no período {res.generic.quantidade}</h2>
+                        <h2 className="font-medium">Faturamento Total: R$ <span>{res.generic.faturamento_total.toLocaleString('pt-BR', opcoes)} </span></h2>
+                        <h2 className="font-medium text-left">Total de Clientes no Período:<span> {res.generic.quantidade}</span></h2>
                     </div>    
                     
                 </div>
