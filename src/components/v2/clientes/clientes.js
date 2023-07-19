@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import url from "../../../backend";
 import './style.css'
 import ReactLoading from 'react-loading'
 import { PeriodSelector } from "../ui/datepicker/datepicker";
-import {FiExternalLink} from 'react-icons/fi'
 import ClientCard from "./clienteCard";
-import { useCallback } from "react";
 import { useRef } from "react";
 
 const clientes = {
@@ -25,6 +23,7 @@ const clientes = {
                 [
                     {
                         'data': '0000-00-00',
+                        'n_pedido': '',
                         
                         'lista_produtos': [
                             {
@@ -76,7 +75,6 @@ export default function Clientes(){
     const [res,setRes] = useState(clientes)
     const [initialData, setInitialData] = useState(new Date().toISOString().split('T')[0])
     const [finalData, setFinalData] = useState(new Date().toISOString().split('T')[0])
-    const [page, setPage] = useState(1)
     const [tipo, setTipo] = useState('recorrentes')
     const [orderBy, setOrderBy]  = useState('valor')
     const scrollRef = useRef()
@@ -85,12 +83,12 @@ export default function Clientes(){
     function dataSetter(initial, final){
         setInitialData(initial)
         setFinalData(final)
-        setPage(1)
+        
     }
 
     useEffect(()=>{
         async function get(){
-            const resp = await axios.get(`${url}/apiv2/clientes/?data_inicial=${initialData}&data_final=${finalData}&tipo=${tipo}&pagina=${page}&orderBy=${orderBy}`)
+            const resp = await axios.get(`${url}/apiv2/clientes/?data_inicial=${initialData}&data_final=${finalData}&tipo=${tipo}&orderBy=${orderBy}`)
             if(resp.data){
                 setRes(resp.data) 
                 setLoading(false)
@@ -99,7 +97,21 @@ export default function Clientes(){
         }   
         setLoading(true)
         get()
-    },[tipo, initialData, finalData, page, orderBy])
+    },[tipo, initialData, finalData, orderBy])
+
+    const export_excel = useCallback(()=>{
+        async function get(){
+            const resp = await axios.get(`${url}/apiv2/exportar/?data_inicial=${initialData}&data_final=${finalData}&tipo=${tipo}&orderBy=${orderBy}`)
+            if(resp.data){
+                setRes(resp.data) 
+                console.log(resp.data)
+                setLoading(false)
+                scrollRef.current.scrollTop=0
+            } 
+        }   
+        setLoading(true)
+        get()
+    },[tipo, initialData, finalData, orderBy])
 
     const opcoes = {style: 'decimal', useGrouping: true}
 
@@ -145,19 +157,12 @@ export default function Clientes(){
                     <div ref={scrollRef} className="vertical-scroll px-5">
                         {res.clientes && res.clientes.map(cliente=>{
                             return(
-                            <ClientCard key={cliente.cpf} cliente={cliente} faturamento_total={res.generic.faturamento_total}/>
+                            <ClientCard tipo={tipo} key={cliente.cpf} cliente={cliente} faturamento_total={res.generic.faturamento_total}/>
                             )
                         })}
                     </div>
 
-                    <div className="flex flex-col justify-center align-center">
-                        <span>Página</span>
-                        <div className="flex">
-                            <button className={`page-button ${loading?'loading':''}`} onClick={page >=2 && !loading?()=>{setPage(page-1); scrollRef.current.scrollTop=0}:()=>{}}>{'<'}</button>
-                            <input value={page} onChange={(e)=>{setPage(parseInt(e.target.value))}} className="font-black text-center" type="text"/>
-                            <button className={`page-button ${loading?'loading':''}`} onClick={!loading?()=>{setPage(page+1); scrollRef.current.scrollTop=0}:()=>{}}>{'>'}</button>
-                        </div>
-                    </div>
+                   
                 </div>
                 
                 
@@ -168,7 +173,7 @@ export default function Clientes(){
                         <h2 className="font-medium">Faturamento Total: R$ <span>{res.generic.faturamento_total.toLocaleString('pt-BR', opcoes)} </span></h2>
                         <h2 className="font-medium text-left">Total de Clientes no Período:<span> {res.generic.quantidade}</span></h2>
                     </div>    
-                    
+                
                 </div>
 
             </section>
