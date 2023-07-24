@@ -5,8 +5,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 
 export const PeriodSelector = ({bucetador}) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    let i_dt = new Date(); 
+    i_dt.setMonth(i_dt.getMonth()-1);
+    i_dt.setDate(1)
+
+    let f_dt = new Date(); 
+    f_dt.setMonth(f_dt.getMonth()-1);
+    
+    const [startDate, setStartDate] = useState(i_dt);
+    const [endDate, setEndDate] = useState(f_dt);
   
     const handleStartDateChange = (date) => {
       setStartDate(date);

@@ -7,48 +7,65 @@ import InfoCard from './info-card'
 import {BsLayoutSplit} from 'react-icons/bs'
 import { SideBar } from './ui/sidebar'
 import { useSelector } from 'react-redux'
+import ReactLoading from 'react-loading'
+
 
 import { PeriodSelector } from './ui/datepicker/datepicker'
   
 
 export default function V2Home(){
-    const [pedidos, setPedidos] = useState({})
+    let i_dt = new Date(); 
+    i_dt.setMonth(i_dt.getMonth()-1);
+    i_dt.setDate(1)
+
+    let f_dt = new Date(); 
+    f_dt.setMonth(f_dt.getMonth()-1);
+
+    const [novos, setNovos] = useState()
+    const [recorrentes, setRecorrentes] = useState()
     const [horizontal, setHorizontal] = useState(true)
-    const [lastDate, setLastDate] = useState('-')
     const [totalClients,setTotalClients] = useState(0)
 
-    const [data_inicial_rec, setData_inicial_rec] = useState(new Date())
-    const [data_final_rec, setData_final_rec] = useState(new Date())
-
-    const [data_inicial_novos, setData_inicial_novos] = useState(new Date().toISOString().split('T')[0])
-    const [data_final_novos, setData_final_novos] = useState(new Date().toISOString().split('T')[0])
+    const [data_inicial_rec, setData_inicial_rec] = useState(i_dt.toISOString().split('T')[0])
+    const [data_final_rec, setData_final_rec] = useState(f_dt.toISOString().split('T')[0])
+    const [data_inicial_novos, setData_inicial_novos] = useState(i_dt.toISOString().split('T')[0])
+    const [data_final_novos, setData_final_novos] = useState(f_dt.toISOString().split('T')[0])
     const {token} = useSelector(state=>state.auth)
+
+    const [novosloading, setNovosLoading] = useState(false)
+    const [recloading, setRecLoading] = useState(false)
     
     
 
     useEffect(()=>{
         async function getRecorrents(){
             const resp = await getRecorrentPerPeriod(data_inicial_rec, data_final_rec, token)
-            
+            console.log(resp.code)
             if (resp.data){
-                setPedidos({...pedidos, 'recorrentes':resp.data})
-                
+                setRecorrentes(resp.data)
+                setRecLoading(false)
             }
+        
+           
+            setRecLoading(false)
         }
+        setRecLoading(true)
         getRecorrents()
-     },[data_inicial_rec, data_final_rec])
+     },[data_inicial_rec, data_final_rec, token])
 
     useEffect(()=>{
         async function getNovos(){
             const resp = await getNovosPerPeriod(data_inicial_novos, data_final_novos, token)
             
             if (resp.data){
-                setPedidos({...pedidos, 'nao_recorrentes':resp.data})
-                
+                setNovos(resp.data)
+                setNovosLoading(false)
             }
+   
         }
+        setNovosLoading(true)
         getNovos()
-     },[data_inicial_novos, data_final_novos])
+     },[data_inicial_novos, data_final_novos, token])
 
 
     useEffect(()=>{
@@ -56,7 +73,7 @@ export default function V2Home(){
             
             let total = 0
             try{
-                total = pedidos.recorrentes.recorrentes.quantidade_clientes + pedidos.nao_recorrentes.quantidade_clientes
+                total = novos.qtd_clientes + recorrentes.qtd_clientes
             }
             catch{
 
@@ -64,7 +81,7 @@ export default function V2Home(){
             setTotalClients(total)
         }
         calculateTotalClients()
-     },[pedidos])
+     },[recorrentes, novos])
  
     function setRecorrentDatas(initial, final){
         setData_inicial_rec(initial)
@@ -94,44 +111,55 @@ export default function V2Home(){
                 
                 <div className='black-box first'>
                     <div>
-                        <h2>Pedidos Não recorrentes</h2>
+                        <div className='flex justify-between align-center'>
+                            <h2 className='flex'>Pedidos Não recorrentes </h2>
+                            <span>{novosloading?<ReactLoading type='bars' width={30}/>:''}</span>
+                        </div>
+                        
                         <PeriodSelector bucetador={setNovosDatas}/>
                     </div>
                     
                 
                         <div className='sub-box-row'>
                             <div>
-                                <h3>Quantidade</h3>
-                            <span>{pedidos.nao_recorrentes?pedidos.nao_recorrentes.quantidade_clientes:'-'}</span> 
+                                <h3>Quantidade de Clientes</h3>
+                            <span>{novos?novos.qtd_clientes:'-'}</span> 
                             <InfoCard text={'Quantidade de clientes não recorrentes.'}/>
                             </div>
 
                             <div>
                                 <h3>Menor valor</h3>
-                            <span>R$ {pedidos.nao_recorrentes?pedidos.nao_recorrentes.valor_menor.toFixed(2):'-'}</span> 
+                            <span>R$ {novos?novos.min_vlr.toFixed(2):'-'}</span> 
                             <InfoCard text={'Menor valor registrado que um cliente não recorrente já comprou no site.'}/>
                             </div>
 
                             <div>
                                 <h3>Ticket medio</h3>
-                            <span>{pedidos.nao_recorrentes?pedidos.nao_recorrentes.valor_medio.toFixed(2):'-'}</span> 
+                            <span>{novos?novos.avg_vlr.toFixed(2):'-'}</span> 
                             <InfoCard text={'Ticket Médio dos clientes que não voltaram a comprar no site.'}/>
                             </div>
 
                             <div>
                                 <h3>Maior valor</h3>
-                            <span>{pedidos.nao_recorrentes?pedidos.nao_recorrentes.valor_maior.toFixed(2):'-'}</span> 
+                            <span>{novos?novos.max_vlr.toFixed(2):'-'}</span> 
                             <InfoCard text={'Maior valor registrado que um cliente não recorrente já comprou no site.'}/>
                             </div>
-                            
-                           
 
+                        </div>
+                        <div className='sub-box-row'>
+                            <div>
+                                <h3>Faturamento Total</h3>
+                                <span>R$ {novos?novos.ttl_vlr.toFixed(2):'-'}</span>
+                            </div>
                         </div>
                 </div>
 
                     <div className='black-box second'>
                         <div>
-                            <h2>Pedidos Recorrentes</h2>
+                        <div className='flex justify-between align-center'>
+                            <h2 className='flex'>Pedidos Recorrentes </h2>
+                            <span>{recloading?<ReactLoading type='bars' width={30}/>:''}</span>
+                        </div>
                             <PeriodSelector bucetador={setRecorrentDatas}/>
                         </div>
                         
@@ -140,24 +168,28 @@ export default function V2Home(){
                             
                                 
                                 <div>
-                                    <h3>Quantidade</h3>
-                                    <span>{pedidos.recorrentes?pedidos.recorrentes.recorrentes.quantidade_clientes:'-'}</span>
+                                    <h3>Quantidade de Clientes</h3>
+                                    <span>{recorrentes?recorrentes.qtd_clientes:'-'}</span>
                                     <InfoCard text={'Quantidade de clientes recorrentes.'}/>
                                 </div>
                                 <div>
                                     <h3>Menor valor</h3>
-                                    <span>R$ {pedidos.recorrentes?pedidos.recorrentes.recorrentes.valor_menor.toFixed(2):'-'}</span>
+                                    <span>R$ {recorrentes?recorrentes.min_vlr.toFixed(2):'-'}</span>
                                     <InfoCard text={'Menor valor registrado que um cliente recorrente já comprou no site.'}/>
                                 </div>
                                 <div>
                                     <h3>Ticket medio</h3>
-                                    <span>R$ {pedidos.recorrentes?pedidos.recorrentes.recorrentes.valor_medio.toFixed(2):'-'}</span>
+                                    <span>R$ {recorrentes?recorrentes.avg_vlr.toFixed(2):'-'}</span>
                                     <InfoCard text={'Ticket Médio dos clientes recorrentes'}/>
                                 </div>
                                 <div>
                                     <h3>Maior valor</h3>
-                                    <span>R$ {pedidos.recorrentes?pedidos.recorrentes.recorrentes.valor_maior.toFixed(2):'-'}</span>
+                                    <span>R$ {recorrentes?recorrentes.max_vlr.toFixed(2):'-'}</span>
                                     <InfoCard text={'Maior valor registrado que um cliente recorrente já comprou no site.'}/>
+                                </div>
+                                <div>
+                                    <h3>Faturamento Total</h3>
+                                    <span>R$ {recorrentes?recorrentes.ttl_vlr.toFixed(2):'-'}</span>
                                 </div>
                         </div>
 
@@ -167,28 +199,22 @@ export default function V2Home(){
                                 
                                 <div>
                                     <h3><AiOutlineCalendar/>Menor intervalo</h3>
-                                    <span>{pedidos.recorrentes?pedidos.recorrentes.recorrentes.intervalo_menor.toFixed(0):'-'} Dias</span>
+                                    <span>{recorrentes?recorrentes.min_intervalo:'-'} Dias</span>
                                     <InfoCard text={'Menor intervalo de tempo entre uma compra e outra.'}/>
                                 </div>
                                 <div>
                                     <h3><AiOutlineCalendar/>Intervalo médio</h3>
-                                    <span>{pedidos.recorrentes?pedidos.recorrentes.recorrentes.intervalo_medio.toFixed(0):'-'} Dias</span>
+                                    <span>{recorrentes?recorrentes.avg_intervalo:'-'} Dias</span>
                                     <InfoCard text={'Tempo médio que um cliente leva para voltar a comprar no site. Este intervalo foi calculado com média aritimética, então pode haver intervalos muito pequenos e muito grandes e é como se fosse um borrão de todos os intervalos, ou seja, não é muito preciso.'}/>
                                 </div>
                                 <div>
                                     
                                     <h3><AiOutlineCalendar/>Maior intervalo</h3>
-                                    <span>{pedidos.recorrentes?pedidos.recorrentes.recorrentes.intervalo_maior.toFixed(0):'-'} Dias</span>
+                                    <span>{recorrentes?recorrentes.max_intervalo:'-'} Dias</span>
                                     <InfoCard text={'Maior tempo que um cliente já levou para voltar a comprar no site.'}/>
                                 </div>
                         </div>
-                    
-
-                    <div>
-                        <h2>Filtro por intervalo</h2>
-                        <FiltroIntervalo/>
-                      
-                    </div>
+               
                     
                 </div>
             </section>
@@ -203,27 +229,28 @@ export default function V2Home(){
                     <div className='sub-box-row'>
                             <div className='reincidencia-item'>
                                 <h3>Quantidade total de clientes</h3>
-                                <span>{pedidos.recorrentes? totalClients:'-'}</span>
+                                <span>{recorrentes && novos? totalClients:'-'}</span>
                             </div>
                             <div className='reincidencia-item'>
                                 <h3>Recorrentes</h3>
-                                <span>{pedidos.recorrentes?(pedidos.recorrentes.recorrentes.quantidade_clientes*100/totalClients).toFixed():'-'}%</span>
+                                <span>{recorrentes && novos?(recorrentes.qtd_clientes*100/totalClients).toFixed(2):'-'}%</span>
                             </div>
                             <div className='reincidencia-item'>
                                 <h3>Não recorrentes</h3>
-                                <span>{pedidos.recorrentes?(pedidos.nao_recorrentes.quantidade_clientes*100/totalClients).toFixed():''}%</span>
+                                <span>{recorrentes && novos?(novos.qtd_clientes*100/totalClients).toFixed(2):''}%</span>
                             </div>
                         </div>
 
-                    <h2>Dos {pedidos.recorrentes?(pedidos.recorrentes.recorrentes.quantidade_clientes*100/totalClients).toFixed():'-'}% Recorrentes:</h2>
+                    <h2>Dos {recorrentes && novos?(recorrentes.qtd_clientes*100/totalClients).toFixed(2):'-'}% Recorrentes:</h2>
                     <div className='sub-box-row'>
                     
-                    {pedidos.recorrentes
-                    ? pedidos.recorrentes.reincidencia.slice(0, 10).map(rein=>{
+                    {recorrentes && novos
+                    ? recorrentes.reincidencia.slice(0, 10).map(rein=>{
                         return(
                             <div className='reincidencia-item'>
-                                <h3>{rein.quantidade_de_clientes}</h3>
-                                <span>{(rein.quantidade_de_compras*100/pedidos.recorrentes.recorrentes.quantidade_clientes).toFixed(1)}%</span>
+                                <h3>{rein.intervalo} Compras:</h3>
+                                <h3>{rein.quantidade} cliente{rein.quantidade>1?'s':''}</h3>
+                                <span>{(rein.quantidade*100/recorrentes.qtd_clientes).toFixed(2)}%</span>
                                 
                                 
                             </div>

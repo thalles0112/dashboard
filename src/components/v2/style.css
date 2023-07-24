@@ -102,10 +102,11 @@
 .black-box .sub-box-row{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     margin-top: 15px;
+    gap: 7px;
 }
 
 .black-box .sub-box-row div{
