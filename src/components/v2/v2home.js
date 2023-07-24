@@ -151,6 +151,10 @@ export default function V2Home(){
                                 <h3>Faturamento Total</h3>
                                 <span>R$ {novos?novos.ttl_vlr.toFixed(2):'-'}</span>
                             </div>
+                            <div>
+                                <h3>Quantidade de pedidos</h3>
+                                <span>{novos?novos.qtd_pedidos:'-'}</span>
+                            </div>
                         </div>
                 </div>
 
@@ -195,7 +199,10 @@ export default function V2Home(){
 
 
                         <div className='sub-box-row'>
-                            
+                            <div>
+                                <h3>Quantidade de pedidos</h3>
+                                <span>{recorrentes?recorrentes.qtd_pedidos:'-'}</span>
+                            </div>
                                 
                                 <div>
                                     <h3><AiOutlineCalendar/>Menor intervalo</h3>
